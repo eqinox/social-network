@@ -1,10 +1,10 @@
-import { authActions } from "./auth-slice";
-import { uiActions } from "./ui-slice";
+import { userActions } from "./user-slice";
+import { notificationActions } from "./notification-slice";
 
 export const sendUserData = (newUser) => {
   return async (dispatch) => {
     dispatch(
-      uiActions.showNotification({
+      notificationActions.showNotification({
         status: "pending",
         title: "Sending data...",
         message: "Logging user",
@@ -32,16 +32,16 @@ export const sendUserData = (newUser) => {
     try {
       const userData = await fetchData();
       dispatch(
-        uiActions.showNotification({
+        notificationActions.showNotification({
           status: "success",
           title: "Succes...",
           message: "Successfully logged in!",
         })
       );
-      dispatch(authActions.login(userData));
+      dispatch(userActions.login(userData));
     } catch (error) {
       dispatch(
-        uiActions.showNotification({
+        notificationActions.showNotification({
           status: "error",
           title: "Error!",
           message: "Fetchind user failed!",
