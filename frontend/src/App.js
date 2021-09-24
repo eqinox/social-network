@@ -8,7 +8,7 @@ import {
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Notification from "./components/helper/Notification";
+import Notification from "./components/UI/Notification";
 
 import AuthForm from "./components/user/AuthForm";
 import { notificationActions } from "./store/notification-slice";
@@ -26,7 +26,7 @@ const App = () => {
       dispatch(notificationActions.hideNotification());
     }, 5000);
   }, [notification]);
-  
+
   return (
     <Fragment>
       <MainNavigation />

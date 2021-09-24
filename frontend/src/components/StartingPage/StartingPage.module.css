@@ -6,3 +6,10 @@
 .starting h1 {
   font-size: 5rem;
 }
+
+.add-article-section {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+  width: 75%;
+}
