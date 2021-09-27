@@ -3,9 +3,10 @@
   border: 1px solid burlywood;
   background-color: #4d4d4d;
   color: burlywood;
-  padding: 5px;
-  margin: 5px;
+  padding: 10px;
+  margin: 10px;
   cursor: pointer;
+  font-size: 1rem;
 }
 
 .button:hover {

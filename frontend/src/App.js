@@ -14,6 +14,7 @@ import AuthForm from "./components/user/AuthForm";
 import { notificationActions } from "./store/notification-slice";
 import MainNavigation from "./components/navbar/MainNavigation";
 import StartingPage from "./components/StartingPage/StartingPage";
+import AddArticle from "./components/article/AddArticle";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -55,6 +56,10 @@ const App = () => {
             <AuthForm />
           </Route>
         )}
+
+        <Route path="/articles/add">
+          <AddArticle />
+        </Route>
 
         <Route path="*">
           <Redirect to="/" />

@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 // redux
 import { useDispatch } from "react-redux";
-import { sendUserData } from "../../store/user-actions";
+import { sendLoginUserData, sendRegisterUserData } from "../../store/user-actions";
 
 const AuthForm = () => {
   const history = useHistory();
@@ -23,8 +23,12 @@ const AuthForm = () => {
       email: email.current.value,
       password: password.current.value,
     };
-
-    dispatch(sendUserData(newUser));
+    if (loginMode) {
+      dispatch(sendLoginUserData(newUser));
+    } else {
+      dispatch(sendRegisterUserData(newUser));
+    }
+    
     email = "";
     password = "";
     history.replace("/");
