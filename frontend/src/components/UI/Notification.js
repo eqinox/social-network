@@ -1,7 +1,11 @@
 import React from "react";
 import classes from "./Notification.module.css";
 
+import { useDispatch } from "react-redux";
+import { notificationActions } from "../../store/notification-slice";
+
 const Notification = (props) => {
+  const dispatch = useDispatch();
   let specialClasses = "";
 
   const status = parseInt(props.status);
@@ -20,10 +24,19 @@ const Notification = (props) => {
     }
   }
 
+  const closeHandler = () => {
+    dispatch(
+      notificationActions.hideNotification({
+        status: "error",
+        message: "Fetchind user failed!",
+      })
+    );
+  };
+
   const cssClasses = `${classes.notification} ${specialClasses}`;
 
   return (
-    <section className={cssClasses}>
+    <section className={cssClasses} onClick={closeHandler}>
       <h2>{props.message}</h2>
     </section>
   );

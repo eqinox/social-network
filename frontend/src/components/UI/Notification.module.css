@@ -9,6 +9,10 @@
   color: white;
 }
 
+.notification:hover {
+  cursor: pointer;
+}
+
 .notification h2,
 .notification p {
   font-size: 1rem;

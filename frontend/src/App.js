@@ -9,7 +9,7 @@ import AuthForm from "./components/user/AuthForm";
 import { notificationActions } from "./store/notification-slice";
 import MainNavigation from "./components/navbar/MainNavigation";
 import StartingPage from "./components/StartingPage/StartingPage";
-import AddArticle from "./components/article/AddArticle";
+import AddArticlePage from "./components/article/AddArticlePage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -53,7 +53,7 @@ const App = () => {
         )}
 
         <Route path="/articles/add">
-          <AddArticle />
+          <AddArticlePage />
         </Route>
 
         <Route path="*">

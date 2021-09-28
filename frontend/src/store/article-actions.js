@@ -7,8 +7,7 @@ export const getAllArticles = () => {
       if (!response.ok) {
         throw new Error("Could not fetch articles data");
       }
-
-      console.log("articles data");
+      
       const articles = await response.json();
 
       return articles;

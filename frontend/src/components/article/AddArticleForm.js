@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { notificationActions } from "../../store/notification-slice";
 import { useHistory } from "react-router-dom";
 
-const AddArticle = () => {
+const AddArticleForm = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const userToken = useSelector((state) => state.user.token);
@@ -47,8 +47,6 @@ const AddArticle = () => {
         })
       );
     });
-
-    // notificationActions.showNotification({message: response})
   };
 
   return (
@@ -83,4 +81,4 @@ const AddArticle = () => {
   );
 };
 
-export default AddArticle;
+export default AddArticleForm;
