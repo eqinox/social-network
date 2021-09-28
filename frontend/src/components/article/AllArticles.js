@@ -10,8 +10,8 @@ const AllArticles = () => {
 
   useEffect(() => {
     dispatch(getAllArticles());
-  }, [])
-  
+  }, [dispatch]);
+
   return (
     <div>
       {articles.map((article) => (

@@ -26,7 +26,8 @@
   margin-bottom: 0.5rem;
 }
 
-.control input, .control textarea {
+.control input,
+.control textarea {
   font: inherit;
   background-color: #4d4d4d;
   color: #38015c;

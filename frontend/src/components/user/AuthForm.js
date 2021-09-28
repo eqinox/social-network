@@ -1,10 +1,10 @@
-import React, { useRef, useState, Fragment } from "react";
+import React, { useRef, useState } from "react";
 import classes from "./AuthForm.module.css";
 import { useHistory } from "react-router-dom";
 
 // redux
 import { useDispatch } from "react-redux";
-import { sendLoginUserData, sendRegisterUserData } from "../../store/user-actions";
+import { sendUserData } from "../../store/user-actions";
 
 const AuthForm = () => {
   const history = useHistory();
@@ -24,11 +24,11 @@ const AuthForm = () => {
       password: password.current.value,
     };
     if (loginMode) {
-      dispatch(sendLoginUserData(newUser));
+      dispatch(sendUserData(newUser, "login"));
     } else {
-      dispatch(sendRegisterUserData(newUser));
+      dispatch(sendUserData(newUser, "register"));
     }
-    
+
     email = "";
     password = "";
     history.replace("/");

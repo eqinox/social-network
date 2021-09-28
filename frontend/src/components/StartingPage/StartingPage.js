@@ -2,7 +2,7 @@ import React from "react";
 
 import classes from "./StartingPage.module.css";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import AllArticles from "../article/AllArticles";
 import Button from "../UI/Button";
 import { Link } from "react-router-dom";

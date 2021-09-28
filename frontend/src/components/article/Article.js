@@ -14,20 +14,25 @@ const Article = (props) => {
   const deleteHandler = () => {
     fetch("http://localhost:1339/articles/delete", {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${token}` },
-      body: JSON.stringify({id: props.id})
-    }).then(data => {
-      console.log('from Articles.js success');
-      console.log(data);
-    }).catch(error => {
-      console.log('from Articles.js error');
-      console.log(error);
-    });
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ id: props.id }),
+    })
+      .then((data) => {
+        console.log("from Articles.js success");
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log("from Articles.js error");
+        console.log(error);
+      });
   };
 
   return (
     <div className={classes.article}>
-      <img alt="Image" src={props.image} />
+      <img alt="something" src={props.image} />
       <div className={classes.title}>{props.title}</div>
       <div className={classes["date-elements"]}>
         <p>{day}</p>
@@ -36,7 +41,11 @@ const Article = (props) => {
       </div>
       <div className={classes.text}>{props.body}</div>
       <div className={classes.actions}>
-        {userId === props.owner && <Button type="button" onDelete={deleteHandler}>Delete</Button>}
+        {userId === props.owner && (
+          <Button type="button" onDelete={deleteHandler}>
+            Delete
+          </Button>
+        )}
       </div>
     </div>
   );

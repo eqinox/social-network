@@ -12,7 +12,7 @@ export const getAllArticles = () => {
       const articles = await response.json();
 
       return articles;
-    }
+    };
 
     try {
       const articles = await fetchArticles();
@@ -20,5 +20,5 @@ export const getAllArticles = () => {
     } catch (error) {
       console.log("Error with get all articles");
     }
-  }
-}
+  };
+};

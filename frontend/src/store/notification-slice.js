@@ -4,7 +4,7 @@ const initialNotificationState = {
   status: null,
   message: null,
   title: null,
-  show: false
+  show: false,
 };
 
 const notificationSlice = createSlice({

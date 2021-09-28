@@ -11,13 +11,14 @@ const MainNavigation = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const user = useSelector((state) => state.user.email);
 
   const logoutHandler = () => {
     dispatch(userActions.logout());
     dispatch(
       notificationActions.showNotification({
         show: true,
-        message: "Successfully logged out!",
+        message: `Successfully logged out ${user}!`,
         status: "success",
         title: "logout",
       })

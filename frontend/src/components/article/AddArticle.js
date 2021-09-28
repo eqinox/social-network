@@ -30,7 +30,7 @@ const AddArticle = () => {
       },
       body: JSON.stringify(newArticle),
     }).then((response) => {
-      if (response.status != 200) {
+      if (response.status !== 200) {
         return dispatch(
           notificationActions.showNotification({
             message: response.statusText,
