@@ -3,27 +3,44 @@ const Article = require("mongoose").model("Article");
 const User = require("mongoose").model("User");
 
 module.exports.getAll = async (req, res) => {
-  const all = await Article.find();
+  const all = await Article.find().populate("owner", "email");
   res.status(200).json(all);
 };
 
-module.exports.delete = (req, res) => {
-  // console.log(req.body);
-  // const articleId = req.params.id;
-  // const userId = req.userData.id;
-  // User.findById(userId).then((user) => {
-  //   Article.findById(articleId).then((article) => {
-  //     console.log(article.owner._id);
-  //     console.log(user._id);
-  //     Article.findByIdAndDelete(articleId, (err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         console.log("SUCCESS");
-  //       }
-  //     });
-  //   });
-  // });
+module.exports.delete = async (req, res, next) => {
+  const articleId = req.params.id;
+  const userId = req.userData.id;
+  
+  let owner;
+  try {
+    owner = await User.findById(userId);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting article failed cannot find current user", 500)
+    );
+  }
+
+  let article;
+  try {
+    article = await Article.findById(articleId);
+  } catch (err) {
+    return next(
+      new HttpError("Deleting article failed cannot fild article", 500)
+    );
+  }
+  
+  if (article.owner._id.toString() !== owner.id.toString()) {
+    return next(
+      new HttpError("Deleting article failed owners aren't same", 500)
+    );
+  }
+  try {
+    await Article.findByIdAndDelete(articleId);
+  } catch (err) {
+    return next(new HttpError("Deleting article failed", 500));
+  }
+
+  res.status(200).json({message: 'Successfully deleted'});
 };
 
 module.exports.add = async (req, res, next) => {

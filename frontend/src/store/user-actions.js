@@ -53,3 +53,4 @@ export const sendUserData = (newUser, action) => {
     }
   };
 };
+
