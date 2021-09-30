@@ -7,10 +7,62 @@ module.exports.getAll = async (req, res) => {
   res.status(200).json(all);
 };
 
+module.exports.getById = async (req, res, next) => {
+  try {
+    const article = await Article.findById(req.params.id);
+    res.status(200).json(article);
+  } catch (error) {
+    return next(new HttpError("Cannot find article!", 500));
+  }
+};
+
+module.exports.edit = async (req, res, next) => {
+  const { image, title, body } = req.body;
+  const articleId = req.params.id;
+  const userId = req.userData.id;
+  console.log(articleId);
+  console.log(userId);
+
+  let owner;
+  let article;
+  try {
+    owner = await User.findById(userId);
+    article = await Article.findById(articleId);
+  } catch (error) {
+    return next(
+      new HttpError("Something went wrong, could not update the article cannot find owner or article", 500)
+    );
+  }
+
+  // try {
+  // } catch (error) {
+  //   return next(new HttpError('Something went wrong, could not update the article', 500))
+  // }
+
+  if (owner.id.toString() !== article.owner._id.toString()) {
+    return next(
+      new HttpError("Something went wrong, could not update the article owner id and article owner id are not same", 500)
+    );
+  }
+
+  article.image = image;
+  article.title = title;
+  article.body = body;
+  try {
+    await article.save();
+  } catch (error) {
+    return next(
+      new HttpError("Something went wrong, could not update the article error saving", 500)
+    );
+  }
+
+  res.status(200).json({ message: "successfully updated" });
+};
+
 module.exports.delete = async (req, res, next) => {
   const articleId = req.params.id;
   const userId = req.userData.id;
-  
+
   let owner;
   try {
     owner = await User.findById(userId);
@@ -28,7 +80,7 @@ module.exports.delete = async (req, res, next) => {
       new HttpError("Deleting article failed cannot fild article", 500)
     );
   }
-  
+
   if (article.owner._id.toString() !== owner.id.toString()) {
     return next(
       new HttpError("Deleting article failed owners aren't same", 500)
@@ -40,7 +92,7 @@ module.exports.delete = async (req, res, next) => {
     return next(new HttpError("Deleting article failed", 500));
   }
 
-  res.status(200).json({message: 'Successfully deleted'});
+  res.status(200).json({ message: "Successfully deleted" });
 };
 
 module.exports.add = async (req, res, next) => {

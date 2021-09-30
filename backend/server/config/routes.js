@@ -18,9 +18,10 @@ module.exports = (app) => {
   // app.post('/users/logout', isAuth, handlers.user.logout);
 
   app.get("/articles", handlers.article.getAll);
-  app.post("/articles/add", isAuth, handlers.article.add);
-  app.delete("/articles/:id", isAuth, handlers.article.delete);
-  // app.patch('/articles/:id', isAuth, handlers.article)
+  app.get("/article/:id", handlers.article.getById);
+  app.post("/article/add", isAuth, handlers.article.add);
+  app.delete("/article/:id", isAuth, handlers.article.delete);
+  app.patch('/article/:id', isAuth, handlers.article.edit)
 
   // nothing match and throw error
   app.use((req, res, next) => {

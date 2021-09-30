@@ -10,6 +10,7 @@ import { notificationActions } from "./store/notification-slice";
 import MainNavigation from "./components/navbar/MainNavigation";
 import StartingPage from "./components/StartingPage/StartingPage";
 import AddArticlePage from "./components/article/AddArticlePage";
+import EditArticlePage from "./components/article/EditArticlePage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ const App = () => {
 
   useEffect(() => {
     setTimeout(() => {
-      console.log("Clearing norification");
       dispatch(notificationActions.hideNotification());
     }, 5000);
   }, [notification, dispatch]);
@@ -55,6 +55,8 @@ const App = () => {
         <Route path="/articles/add">
           <AddArticlePage />
         </Route>
+
+        <Route path="/article/edit/:id" component={EditArticlePage} />
 
         <Route path="*">
           <Redirect to="/" />

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialArticleState = {
   all: [],
+  selectedArticle: null,
 };
 
 const articleSlice = createSlice({
@@ -11,6 +12,9 @@ const articleSlice = createSlice({
     getAll(state, action) {
       const articles = action.payload;
       state.all = articles;
+    },
+    getSelected(state, action) {
+      state.selectedArticle = action.payload;
     },
   },
 });

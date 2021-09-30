@@ -1,18 +1,24 @@
 import React, { useRef } from "react";
 
-import classes from "./AddArticleForm.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { notificationActions } from "../../store/notification-slice";
-import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
-const AddArticleForm = () => {
+import { editArticle } from "../../store/article-actions";
+
+import classes from "./EditArticleForm.module.css";
+
+const EditArticleForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const article = useSelector((state) => state.articles.selectedArticle);
   const userToken = useSelector((state) => state.user.token);
-
   let title = useRef();
   let body = useRef();
   let image = useRef();
+
+  if (article) {
+    title.current.value = article.title;
+    body.current.value = article.body;
+    image.current.value = article.image;
+  }
 
   const submitHandler = (event) => {
     event.preventDefault();
@@ -21,37 +27,12 @@ const AddArticleForm = () => {
       title: title.current.value,
       body: body.current.value,
     };
-
-    fetch("http://localhost:1339/articles/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userToken}`,
-      },
-      body: JSON.stringify(newArticle),
-    }).then((response) => {
-      if (response.status !== 200) {
-        return dispatch(
-          notificationActions.showNotification({
-            message: response.statusText,
-            status: response.status,
-          })
-        );
-      }
-      history.replace("/welcome");
-
-      dispatch(
-        notificationActions.showNotification({
-          message: "Successfuly added",
-          status: response.status,
-        })
-      );
-    });
+    dispatch(editArticle(article._id, newArticle, userToken));
   };
 
   return (
     <div className={classes.auth}>
-      <h1>Add Article</h1>
+      <h1>Edit Article</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="title">Title</label>
@@ -74,11 +55,11 @@ const AddArticleForm = () => {
         </div>
 
         <div className={classes.actions}>
-          <button>Create</button>
+          <button>Edit</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default AddArticleForm;
+export default EditArticleForm;

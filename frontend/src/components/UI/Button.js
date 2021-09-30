@@ -8,6 +8,8 @@ const Button = (props) => {
       props.onBackClick(); // come from AddArticlePage.js
     } else if (props.children.toLowerCase().includes('delete')){
       props.onDelete(); // come from Article.js
+    } else if (props.children.toLowerCase().includes('edit')) {
+      props.onEdit();
     }
   }
 

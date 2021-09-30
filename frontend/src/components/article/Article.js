@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import Button from "../UI/Button";
 
 import { useDispatch } from "react-redux";
-import { deleteArticle } from "../../store/article-actions";
+import { deleteArticle, getArticle } from "../../store/article-actions";
 
 import classes from "./Article.module.css";
+import { Link } from "react-router-dom";
 
 const Article = (props) => {
   const dispatch = useDispatch();
@@ -21,6 +22,10 @@ const Article = (props) => {
     dispatch(deleteArticle(articleId, userToken));
   };
 
+  const editHandler = () => {
+    dispatch(getArticle(articleId));
+  };
+
   return (
     <div className={classes.article}>
       <img alt="something" src={props.image} />
@@ -33,6 +38,13 @@ const Article = (props) => {
       <div className={classes.text}>{props.body}</div>
       <div>Author: {publisher}</div>
       <div className={classes.actions}>
+        {userId === props.owner._id && (
+          <Link to={`/article/edit/${props.owner._id}`}>
+            <Button type="button" onEdit={editHandler}>
+              Edit
+            </Button>
+          </Link>
+        )}
         {userId === props.owner._id && (
           <Button type="button" onDelete={deleteHandler}>
             Delete
