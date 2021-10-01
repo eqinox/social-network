@@ -15,6 +15,7 @@ const MainNavigation = () => {
 
   const logoutHandler = () => {
     dispatch(userActions.logout());
+
     dispatch(
       notificationActions.showNotification({
         show: true,
@@ -23,6 +24,7 @@ const MainNavigation = () => {
         title: "logout",
       })
     );
+
     history.replace("/");
   };
 
@@ -31,6 +33,7 @@ const MainNavigation = () => {
       <Link to="/">
         <div className={classes.logo}>React Auth</div>
       </Link>
+
       <nav>
         <ul>
           <li>{!isLoggedIn && <Link to="/auth">Login</Link>}</li>

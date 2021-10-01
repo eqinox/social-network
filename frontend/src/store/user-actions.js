@@ -16,19 +16,17 @@ export const sendUserData = (newUser, action) => {
       url = "http://localhost:1339/users/login";
     }
     const fetchData = async () => {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newUser),
-      });
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(newUser),
+        });
 
-      if (!response.ok) {
-        throw new Error("Could not fetch user data!");
+        return await response.json();
+      } catch (error) {
+        return error;
       }
-
-      const data = await response.json();
-
-      return data;
     };
 
     try {
@@ -53,4 +51,3 @@ export const sendUserData = (newUser, action) => {
     }
   };
 };
-

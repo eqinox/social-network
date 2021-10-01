@@ -10,8 +10,7 @@ const articleSlice = createSlice({
   initialState: initialArticleState,
   reducers: {
     getAll(state, action) {
-      const articles = action.payload;
-      state.all = articles;
+      state.all = action.payload;
     },
     getSelected(state, action) {
       state.selectedArticle = action.payload;

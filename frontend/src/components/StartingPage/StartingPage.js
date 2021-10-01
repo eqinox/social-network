@@ -13,7 +13,9 @@ const StartingPage = () => {
   return (
     <section className={classes.starting}>
       <h1>Welcome {user.email}!</h1>
+      
       <AllArticles />
+
       <div className={classes["add-article-section"]}>
         <Link to="/articles/add">
           <Button type="button">Add Article</Button>

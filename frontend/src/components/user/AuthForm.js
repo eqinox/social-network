@@ -19,10 +19,12 @@ const AuthForm = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
+
     const newUser = {
       email: email.current.value,
       password: password.current.value,
     };
+
     if (loginMode) {
       dispatch(sendUserData(newUser, "login"));
     } else {
@@ -31,6 +33,7 @@ const AuthForm = () => {
 
     email = "";
     password = "";
+    
     history.replace("/");
   };
 

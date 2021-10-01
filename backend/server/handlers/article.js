@@ -131,5 +131,5 @@ module.exports.add = async (req, res, next) => {
   } catch (err) {
     return next(new HttpError("Creating article failed! User part", 500));
   }
-  res.status(200).json(createdArticle);
+  res.status(200).json({message: 'Successfuly created article'});
 };

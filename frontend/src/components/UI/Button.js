@@ -2,16 +2,16 @@ import React from "react";
 
 import classes from "./Button.module.css";
 
-const Button = (props) => {  
+const Button = (props) => {
   const clickHandler = () => {
-    if (props.children.toLowerCase().includes('back')) {
+    if (props.children.toLowerCase().includes("back")) {
       props.onBackClick(); // come from AddArticlePage.js
-    } else if (props.children.toLowerCase().includes('delete')){
+    } else if (props.children.toLowerCase().includes("delete")) {
       props.onDelete(); // come from Article.js
-    } else if (props.children.toLowerCase().includes('edit')) {
+    } else if (props.children.toLowerCase().includes("edit")) {
       props.onEdit();
     }
-  }
+  };
 
   return (
     <button

@@ -1,14 +1,15 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 import Button from "../UI/Button";
-
-import { useDispatch } from "react-redux";
-import { deleteArticle, getArticle } from "../../store/article-actions";
+import { getOneArticle, getAllArticles } from "../../store/article-actions";
 
 import classes from "./Article.module.css";
 import { Link } from "react-router-dom";
+import { notificationActions } from "../../store/notification-slice";
 
 const Article = (props) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.id);
@@ -18,12 +19,35 @@ const Article = (props) => {
   const day = props.publishingDate.toLocaleString("BG", { day: "2-digit" });
   const year = props.publishingDate.getFullYear();
 
-  const deleteHandler = () => {
-    dispatch(deleteArticle(articleId, userToken));
+  const deleteHandler = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:1339/article/${articleId}`,
+        { method: "DELETE", headers: { Authorization: `Bearer ${userToken}` } }
+      );
+
+      const data = await response.json();
+
+      dispatch(
+        notificationActions.showNotification({
+          status: "success",
+          message: data.message,
+        })
+      );
+      dispatch(getAllArticles());
+      history.replace("/welcome");
+    } catch (err) {
+      dispatch(
+        notificationActions.showNotification({
+          status: "error",
+          message: err.toString(),
+        })
+      );
+    }
   };
 
   const editHandler = () => {
-    dispatch(getArticle(articleId));
+    dispatch(getOneArticle(articleId));
   };
 
   return (

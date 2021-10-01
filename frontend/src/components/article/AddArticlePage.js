@@ -4,19 +4,22 @@ import Button from "../UI/Button";
 
 import AddArticleForm from "./AddArticleForm";
 
-import classes from './AddArticlePage.module.css'
+import classes from "./AddArticlePage.module.css";
 
 const AddArticlePage = () => {
   const history = useHistory();
 
   const goBackHandler = () => {
     history.goBack();
-  }
+  };
+
   return (
-    <Fragment >
+    <Fragment>
       <AddArticleForm />
       <div className={classes.buttons}>
-        <Button type="button" onBackClick={goBackHandler}>Back</Button>
+        <Button type="button" onBackClick={goBackHandler}>
+          Back
+        </Button>
       </div>
     </Fragment>
   );

@@ -1,33 +1,68 @@
 import React, { useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
-import { editArticle } from "../../store/article-actions";
+import { notificationActions } from "../../store/notification-slice";
 
 import classes from "./EditArticleForm.module.css";
 
 const EditArticleForm = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const article = useSelector((state) => state.articles.selectedArticle);
-  const userToken = useSelector((state) => state.user.token);
+  const article = useSelector((state) => state.articles.selectedArticle); // the selected article for delete
+  const userToken = useSelector((state) => state.user.token); // for authentication
+
   let title = useRef();
   let body = useRef();
   let image = useRef();
 
-  if (article) {
+  if (article && title.current && body.current && image.current) {
     title.current.value = article.title;
     body.current.value = article.body;
     image.current.value = article.image;
   }
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+
     const newArticle = {
       image: image.current.value,
       title: title.current.value,
       body: body.current.value,
     };
-    dispatch(editArticle(article._id, newArticle, userToken));
+
+    try {
+      const response = await fetch(
+        `http://localhost:1339/article/${article._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newArticle),
+        }
+      );
+
+      const data = await response.json();
+
+      dispatch(
+        notificationActions.showNotification({
+          status: "success",
+          message: data.message,
+        })
+      );
+
+      history.replace("/welcome");
+    } catch (err) {
+      dispatch(
+        notificationActions.showNotification({
+          status: "error",
+          message: err.toString(),
+        })
+      );
+    }
   };
 
   return (

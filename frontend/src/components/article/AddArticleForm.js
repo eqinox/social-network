@@ -14,39 +14,43 @@ const AddArticleForm = () => {
   let body = useRef();
   let image = useRef();
 
-  const submitHandler = (event) => {
+  const submitHandler = async (event) => {
     event.preventDefault();
+
     const newArticle = {
       image: image.current.value,
       title: title.current.value,
       body: body.current.value,
     };
 
-    fetch("http://localhost:1339/articles/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${userToken}`,
-      },
-      body: JSON.stringify(newArticle),
-    }).then((response) => {
-      if (response.status !== 200) {
-        return dispatch(
-          notificationActions.showNotification({
-            message: response.statusText,
-            status: response.status,
-          })
-        );
-      }
-      history.replace("/welcome");
+    try {
+      const response = await fetch("http://localhost:1339/article/add", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${userToken}`,
+        },
+        body: JSON.stringify(newArticle),
+      });
+
+      const data = await response.json();
 
       dispatch(
         notificationActions.showNotification({
-          message: "Successfuly added",
-          status: response.status,
+          message: data.message,
+          status: "success",
         })
       );
-    });
+
+      history.replace("/welcome");
+    } catch (err) {
+      dispatch(
+        notificationActions.showNotification({
+          status: "error",
+          message: err.toString(),
+        })
+      );
+    }
   };
 
   return (
