@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllArticles } from "../../store/article-actions";
+import { getAllArticles } from "../store/article/article-actions";
 
 import Article from "./Article";
 

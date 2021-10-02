@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router";
 import { useSelector } from "react-redux";
-import EditArticleForm from "./EditArticleForm";
-import Button from "../UI/Button";
+import EditArticleForm from "../components/EditArticleForm";
+import Button from "../../shared/components/UI/Button";
 
 import classes from "./EditArticlePage.module.css";
 

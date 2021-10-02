@@ -1,5 +1,5 @@
 import { articleActions } from "./article-slice";
-import { notificationActions } from "./notification-slice";
+import { notificationActions } from "../notification/notification-slice";
 
 export const getAllArticles = () => {
   return async (dispatch) => {

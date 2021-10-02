@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./Notification.module.css";
 
 import { useDispatch } from "react-redux";
-import { notificationActions } from "../../store/notification-slice";
+import { notificationActions } from "../../../store/notification/notification-slice";
 
 const Notification = (props) => {
   const dispatch = useDispatch();

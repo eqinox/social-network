@@ -3,14 +3,14 @@ import { Route, Redirect, Switch } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
-import Notification from "./components/UI/Notification";
+import Notification from "./shared/components/UI/Notification";
 
-import AuthForm from "./components/user/AuthForm";
-import { notificationActions } from "./store/notification-slice";
-import MainNavigation from "./components/navbar/MainNavigation";
-import StartingPage from "./components/StartingPage/StartingPage";
-import AddArticlePage from "./components/article/AddArticlePage";
-import EditArticlePage from "./components/article/EditArticlePage";
+import AuthForm from './user/AuthForm';
+import { notificationActions } from "./store/notification/notification-slice";
+import MainNavigation from "./shared/components/navbar/MainNavigation";
+import StartingPage from "./shared/components/StartingPage/StartingPage";
+import AddArticlePage from "./article/pages/AddArticlePage";
+import EditArticlePage from "./article/pages/EditArticlePage";
 
 const App = () => {
   const dispatch = useDispatch();

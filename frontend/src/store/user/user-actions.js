@@ -1,5 +1,5 @@
 import { userActions } from "./user-slice";
-import { notificationActions } from "./notification-slice";
+import { notificationActions } from "../notification/notification-slice";
 
 export const sendUserData = (newUser, action) => {
   return async (dispatch) => {

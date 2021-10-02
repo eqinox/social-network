@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import { useHistory } from "react-router";
-import Button from "../UI/Button";
+import Button from "../../shared/components/UI/Button";
 
-import AddArticleForm from "./AddArticleForm";
+import AddArticleForm from "../components/AddArticleForm";
 
 import classes from "./AddArticlePage.module.css";
 

@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
-import Button from "../UI/Button";
-import { getOneArticle, getAllArticles } from "../../store/article-actions";
+import Button from "../shared/components/UI/Button";
+import { getOneArticle, getAllArticles } from "../store/article/article-actions";
 
 import classes from "./Article.module.css";
 import { Link } from "react-router-dom";
-import { notificationActions } from "../../store/notification-slice";
+import { notificationActions } from "../store/notification/notification-slice";
 
 const Article = (props) => {
   const history = useHistory();

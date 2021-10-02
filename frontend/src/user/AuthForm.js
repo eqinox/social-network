@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom";
 
 // redux
 import { useDispatch } from "react-redux";
-import { sendUserData } from "../../store/user-actions";
+import { sendUserData } from "../store/user/user-actions";
 
 const AuthForm = () => {
   const history = useHistory();

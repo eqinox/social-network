@@ -2,10 +2,10 @@ import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
-import { userActions } from "../../store/user-slice";
+import { userActions } from "../../../store/user/user-slice";
 
 import classes from "./MainNavigation.module.css";
-import { notificationActions } from "../../store/notification-slice";
+import { notificationActions } from "../../../store/notification/notification-slice";
 
 const MainNavigation = () => {
   const history = useHistory();

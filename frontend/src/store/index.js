@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
 
-import userSlice from "./user-slice";
-import notificationSlice from "./notification-slice";
-import articleSlice from "./article-slice";
+import userSlice from "./user/user-slice";
+import notificationSlice from "./notification/notification-slice";
+import articleSlice from "./article/article-slice";
 
 const store = configureStore({
   reducer: {

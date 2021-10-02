@@ -1,18 +1,27 @@
 import React, { useRef } from "react";
 
-import classes from "./AddArticleForm.module.css";
-import { useDispatch, useSelector } from "react-redux";
-import { notificationActions } from "../../store/notification-slice";
-import { useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router";
 
-const AddArticleForm = () => {
-  const dispatch = useDispatch();
+import { notificationActions } from "../../store/notification/notification-slice";
+
+import classes from "./EditArticleForm.module.css";
+
+const EditArticleForm = () => {
   const history = useHistory();
-  const userToken = useSelector((state) => state.user.token);
+  const dispatch = useDispatch();
+  const article = useSelector((state) => state.articles.selectedArticle); // the selected article for delete
+  const userToken = useSelector((state) => state.user.token); // for authentication
 
   let title = useRef();
   let body = useRef();
   let image = useRef();
+
+  if (article && title.current && body.current && image.current) {
+    title.current.value = article.title;
+    body.current.value = article.body;
+    image.current.value = article.image;
+  }
 
   const submitHandler = async (event) => {
     event.preventDefault();
@@ -24,21 +33,24 @@ const AddArticleForm = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:1339/article/add", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${userToken}`,
-        },
-        body: JSON.stringify(newArticle),
-      });
+      const response = await fetch(
+        `http://localhost:1339/article/${article._id}`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newArticle),
+        }
+      );
 
       const data = await response.json();
 
       dispatch(
         notificationActions.showNotification({
-          message: data.message,
           status: "success",
+          message: data.message,
         })
       );
 
@@ -55,7 +67,7 @@ const AddArticleForm = () => {
 
   return (
     <div className={classes.auth}>
-      <h1>Add Article</h1>
+      <h1>Edit Article</h1>
       <form onSubmit={submitHandler}>
         <div className={classes.control}>
           <label htmlFor="title">Title</label>
@@ -78,11 +90,11 @@ const AddArticleForm = () => {
         </div>
 
         <div className={classes.actions}>
-          <button>Create</button>
+          <button>Edit</button>
         </div>
       </form>
     </div>
   );
 };
 
-export default AddArticleForm;
+export default EditArticleForm;
