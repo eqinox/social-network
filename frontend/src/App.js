@@ -5,12 +5,13 @@ import { useDispatch, useSelector } from "react-redux";
 
 import Notification from "./shared/components/UI/Notification";
 
-import AuthForm from './user/AuthForm';
+import AuthForm from "./user/AuthForm";
 import { notificationActions } from "./store/notification/notification-slice";
 import MainNavigation from "./shared/components/navbar/MainNavigation";
 import StartingPage from "./shared/components/StartingPage/StartingPage";
 import AddArticlePage from "./article/pages/AddArticlePage";
 import EditArticlePage from "./article/pages/EditArticlePage";
+import ProfilePage from "./user/ProfilePage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ const App = () => {
 
         {isLoggedIn && (
           <Route path="/profile">
-            <StartingPage />
+            <ProfilePage />
           </Route>
         )}
         {!isLoggedIn && (
@@ -52,11 +53,15 @@ const App = () => {
           </Route>
         )}
 
-        <Route path="/articles/add">
-          <AddArticlePage />
-        </Route>
+        {isLoggedIn && (
+          <Route path="/articles/add">
+            <AddArticlePage />
+          </Route>
+        )}
 
-        <Route path="/article/edit/:id" component={EditArticlePage} />
+        {isLoggedIn && (
+          <Route path="/article/edit/:id" component={EditArticlePage} />
+        )}
 
         <Route path="*">
           <Redirect to="/" />

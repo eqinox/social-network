@@ -4,6 +4,8 @@ const { check } = require("express-validator");
 const isAuth = require("../middlewares/is-auth");
 const HttpError = require("../models/http-error");
 
+const fileUpload = require("../middlewares/file-upload");
+
 module.exports = (app) => {
   app.post("/users/login", handlers.user.login);
   app.post(
@@ -19,9 +21,10 @@ module.exports = (app) => {
 
   app.get("/articles", handlers.article.getAll);
   app.get("/article/:id", handlers.article.getById);
-  app.post("/article/add", isAuth, handlers.article.add);
+  app.post('/articles/test', fileUpload.single('image'), handlers.article.test)
+  app.post("/article/add", fileUpload.single('image'), isAuth, handlers.article.add);
   app.delete("/article/:id", isAuth, handlers.article.delete);
-  app.patch('/article/:id', isAuth, handlers.article.edit)
+  app.patch("/article/:id", isAuth, handlers.article.edit);
 
   // nothing match and throw error
   app.use((req, res, next) => {

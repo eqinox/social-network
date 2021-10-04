@@ -7,6 +7,11 @@ module.exports.getAll = async (req, res) => {
   res.status(200).json(all);
 };
 
+module.exports.test = (req, res) => {
+  console.log(req.file);
+  res.status(200).json({ message: "success" });
+};
+
 module.exports.getById = async (req, res, next) => {
   try {
     const article = await Article.findById(req.params.id);
@@ -30,7 +35,10 @@ module.exports.edit = async (req, res, next) => {
     article = await Article.findById(articleId);
   } catch (error) {
     return next(
-      new HttpError("Something went wrong, could not update the article cannot find owner or article", 500)
+      new HttpError(
+        "Something went wrong, could not update the article cannot find owner or article",
+        500
+      )
     );
   }
 
@@ -41,7 +49,10 @@ module.exports.edit = async (req, res, next) => {
 
   if (owner.id.toString() !== article.owner._id.toString()) {
     return next(
-      new HttpError("Something went wrong, could not update the article owner id and article owner id are not same", 500)
+      new HttpError(
+        "Something went wrong, could not update the article owner id and article owner id are not same",
+        500
+      )
     );
   }
 
@@ -52,7 +63,10 @@ module.exports.edit = async (req, res, next) => {
     await article.save();
   } catch (error) {
     return next(
-      new HttpError("Something went wrong, could not update the article error saving", 500)
+      new HttpError(
+        "Something went wrong, could not update the article error saving",
+        500
+      )
     );
   }
 
@@ -115,6 +129,7 @@ module.exports.add = async (req, res, next) => {
     body: req.body.body,
     publishedDate: new Date(),
     owner: user._id,
+    image: req.file.path
   };
   const createdArticle = new Article(newArticle);
 
@@ -131,5 +146,5 @@ module.exports.add = async (req, res, next) => {
   } catch (err) {
     return next(new HttpError("Creating article failed! User part", 500));
   }
-  res.status(200).json({message: 'Successfuly created article'});
+  res.status(200).json({ message: "Successfuly created article" });
 };

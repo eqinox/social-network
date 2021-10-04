@@ -25,7 +25,7 @@ const MainNavigation = () => {
       })
     );
 
-    history.replace("/");
+    history.replace("/auth");
   };
 
   return (

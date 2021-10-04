@@ -17,9 +17,9 @@ const StartingPage = () => {
       <AllArticles />
 
       <div className={classes["add-article-section"]}>
-        <Link to="/articles/add">
+        {user.isLoggedIn && <Link to="/articles/add">
           <Button type="button">Add Article</Button>
-        </Link>
+        </Link>}
       </div>
     </section>
   );

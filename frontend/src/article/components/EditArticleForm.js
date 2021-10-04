@@ -77,17 +77,7 @@ const EditArticleForm = () => {
           <label htmlFor="body">Body</label>
           <textarea id="body" required ref={body} />
         </div>
-
-        <div className={classes.control}>
-          <label htmlFor="image">Image</label>
-          <input
-            type="text"
-            id="image"
-            placeholder="Link to image"
-            required
-            ref={image}
-          />
-        </div>
+        {/* <img src={`http://localhost:1339/${article.image}`} /> */}
 
         <div className={classes.actions}>
           <button>Edit</button>

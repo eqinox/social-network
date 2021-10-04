@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialArticleState = {
   all: [],
   selectedArticle: null,
+  image: null
 };
 
 const articleSlice = createSlice({
@@ -15,6 +16,10 @@ const articleSlice = createSlice({
     getSelected(state, action) {
       state.selectedArticle = action.payload;
     },
+    setImage(state, action) {
+      console.log(action.payload);
+      state.image = action.payload;
+    }
   },
 });
 

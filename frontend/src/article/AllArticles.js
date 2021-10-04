@@ -19,7 +19,7 @@ const AllArticles = () => {
           title={article.title}
           publishingDate={new Date(article.publishedDate)}
           body={article.body}
-          image={article.image}
+          image={`http://localhost:1339/${article.image}`}
           key={article._id}
           id={article._id}
           owner={article.owner}
