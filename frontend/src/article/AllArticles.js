@@ -12,6 +12,10 @@ const AllArticles = () => {
     dispatch(getAllArticles());
   }, [dispatch]);
 
+  for (const item of articles) {
+    console.log(item);
+  }
+  console.log('next');
   return (
     <div>
       {articles.map((article) => (

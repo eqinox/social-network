@@ -3,13 +3,14 @@ import classes from "./AuthForm.module.css";
 import { useHistory } from "react-router-dom";
 
 // redux
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sendUserData } from "../store/user/user-actions";
 
 const AuthForm = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const [loginMode, setLoginMode] = useState(true);
+  const user = useSelector((state) => state.user.email);
   let email = useRef();
   let password = useRef();
 
@@ -33,8 +34,9 @@ const AuthForm = () => {
 
     email = "";
     password = "";
-    
-    history.replace("/");
+    if (user) {
+      history.replace("/");
+    }
   };
 
   return (

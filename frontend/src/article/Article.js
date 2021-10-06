@@ -2,15 +2,20 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 import Button from "../shared/components/UI/Button";
-import { getOneArticle, getAllArticles } from "../store/article/article-actions";
+import {
+  getOneArticle,
+  getAllArticles,
+} from "../store/article/article-actions";
 
 import classes from "./Article.module.css";
 import { Link } from "react-router-dom";
 import { notificationActions } from "../store/notification/notification-slice";
+import { addToFavourite } from "../store/user/user-actions";
 
 const Article = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const userFavourite = useSelector((state) => state.user.favourite);
   const userToken = useSelector((state) => state.user.token);
   const userId = useSelector((state) => state.user.id);
   const articleId = props.id;
@@ -50,6 +55,19 @@ const Article = (props) => {
     dispatch(getOneArticle(articleId));
   };
 
+  const favouriteHandler = () => {
+    if (userFavourite.includes(articleId)) {
+      dispatch(addToFavourite(articleId, userToken, 'remove'));
+    } else {
+      dispatch(addToFavourite(articleId, userToken, 'add'));
+    }
+  };
+  let favouriteText;
+  if (userFavourite.includes(articleId)) {
+    favouriteText = "Remove from favourite";
+  } else {
+    favouriteText = "Add to favourite";
+  }
   return (
     <div className={classes.article}>
       <img alt="something" src={props.image} />
@@ -62,8 +80,17 @@ const Article = (props) => {
       <div className={classes.text}>{props.body}</div>
       <div>Author: {publisher}</div>
       <div className={classes.actions}>
+        <Button
+          onAddToFavourite={favouriteHandler}
+          favourite
+          isInFavourite={
+            userFavourite ? userFavourite.includes(articleId) : null
+          }
+        >
+          {favouriteText}
+        </Button>
         {userId === props.owner._id && (
-          <Link to={`/article/edit/${props.owner._id}`}>
+          <Link to={`/article/edit/${props.id}`}>
             <Button type="button" onEdit={editHandler}>
               Edit
             </Button>

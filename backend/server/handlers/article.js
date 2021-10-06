@@ -129,7 +129,7 @@ module.exports.add = async (req, res, next) => {
     body: req.body.body,
     publishedDate: new Date(),
     owner: user._id,
-    image: req.file.path
+    image: req.file ? req.file.path : null,
   };
   const createdArticle = new Article(newArticle);
 

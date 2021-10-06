@@ -15,10 +15,6 @@ const articleSlice = createSlice({
     },
     getSelected(state, action) {
       state.selectedArticle = action.payload;
-    },
-    setImage(state, action) {
-      console.log(action.payload);
-      state.image = action.payload;
     }
   },
 });

@@ -4,30 +4,32 @@ import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router";
 
 import { notificationActions } from "../../store/notification/notification-slice";
+import ImageUpload from "../../shared/components/UI/ImageUpload";
 
 import classes from "./EditArticleForm.module.css";
 
-const EditArticleForm = () => {
+const EditArticleForm = (props) => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const article = useSelector((state) => state.articles.selectedArticle); // the selected article for delete
+  const article = useSelector((state) => state.articles.selectedArticle);
   const userToken = useSelector((state) => state.user.token); // for authentication
 
   let title = useRef();
   let body = useRef();
-  let image = useRef();
+  let image;
+  // let image = useRef();
 
-  if (article && title.current && body.current && image.current) {
+  if (article && title.current && body.current) {
     title.current.value = article.title;
     body.current.value = article.body;
-    image.current.value = article.image;
+    // image.current.value = article.image;
   }
 
   const submitHandler = async (event) => {
     event.preventDefault();
 
     const newArticle = {
-      image: image.current.value,
+      image: image,
       title: title.current.value,
       body: body.current.value,
     };
@@ -65,6 +67,10 @@ const EditArticleForm = () => {
     }
   };
 
+  const imageHandler = (incomingImage) => {
+    image = incomingImage;
+  };
+  
   return (
     <div className={classes.auth}>
       <h1>Edit Article</h1>
@@ -77,7 +83,23 @@ const EditArticleForm = () => {
           <label htmlFor="body">Body</label>
           <textarea id="body" required ref={body} />
         </div>
-        {/* <img src={`http://localhost:1339/${article.image}`} /> */}
+
+        {/* <div className={classes.control}>
+          <label htmlFor="image">Image</label>
+          <input
+            type="text"
+            id="image"
+            placeholder="Link to image"
+            required
+            ref={image}
+          />
+        </div> */}
+        {article && (
+          <ImageUpload
+            onImageUpload={imageHandler}
+            previewUrl={article.image}
+          />
+        )}
 
         <div className={classes.actions}>
           <button>Edit</button>

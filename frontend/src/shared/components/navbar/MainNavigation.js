@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../store/user/user-slice";
 
-import classes from "./MainNavigation.module.css";
+import "./MainNavigation.css";
 import { notificationActions } from "../../../store/notification/notification-slice";
 
 const MainNavigation = () => {
@@ -12,6 +12,7 @@ const MainNavigation = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const user = useSelector((state) => state.user.email);
+  const favourite = useSelector((state) => state.user.favourite);
 
   const logoutHandler = () => {
     dispatch(userActions.logout());
@@ -27,15 +28,19 @@ const MainNavigation = () => {
 
     history.replace("/auth");
   };
-
+  console.log('favourite');
+  console.log(favourite.length);
   return (
-    <header className={classes.header}>
+    <header className="header">
       <Link to="/">
-        <div className={classes.logo}>React Auth</div>
+        <div className="logo">React Auth</div>
       </Link>
 
       <nav>
         <ul>
+          <li>
+            <button id="favourite-button">{favourite.length}</button>
+          </li>
           <li>{!isLoggedIn && <Link to="/auth">Login</Link>}</li>
           <li>{isLoggedIn && <Link to="/profile">Profile</Link>}</li>
           <li>

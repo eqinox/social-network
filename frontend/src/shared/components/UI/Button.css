@@ -1,5 +1,5 @@
 .button {
-  font:inherit;
+  font: inherit;
   border-radius: 5px;
   border: 1px solid burlywood;
   background-color: #4d4d4d;
@@ -12,7 +12,18 @@
 
 .button:focus {
   outline: none;
-  color:red;
+  color: red;
+}
+
+.favourite-in {
+  border: 1px solid red;
+  color: red;
+}
+
+.favourite-out {
+  
+  border: 1px solid green;
+  color: greenyellow;
 }
 
 .button:disabled,

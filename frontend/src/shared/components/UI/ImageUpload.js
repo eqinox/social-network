@@ -2,12 +2,14 @@ import React, { useRef, useEffect, useState } from "react";
 
 import Button from "./Button";
 
+
 import "./ImageUpload.css";
 
 const ImageUpload = (props) => {
   const [file, setFile] = useState();
-  const [previewUrl, setPreviewUrl] = useState();
+  const [previewUrl, setPreviewUrl] = useState(props.previewUrl);
   const filePickerRef = useRef();
+  const baseUrl = "http://localhost:1339/";
 
   useEffect(() => {
     if (!file) {
@@ -47,7 +49,7 @@ const ImageUpload = (props) => {
       />
       <div className={`image-upload ${props.center && "center"}`}>
         <div className="image-upload__preview">
-          {previewUrl && <img src={previewUrl} alt="Preview" />}
+          {previewUrl && <img src={props.previewUrl ? baseUrl + previewUrl : previewUrl} alt="Preview" />}
           {!previewUrl && <p>Please pick an image.</p>}
         </div>
         <Button type="button" onImageUpload={pickImageHandler}>

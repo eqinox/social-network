@@ -6,6 +6,7 @@ const environment = process.env.NODE_ENV || "development";
 const settings = require("../config/settings")[environment];
 const { validationResult } = require("express-validator");
 const HttpError = require("../models/http-error");
+const Article = require("../models/article");
 
 module.exports.register = async (req, res, next) => {
   const errors = validationResult(req);
@@ -59,6 +60,7 @@ module.exports.register = async (req, res, next) => {
       email: user.email,
       id: user._id,
       token,
+      favourite: user.favourite,
     };
     logger.tempLog.info("User Register: ", message);
     res.status(201).json(message);
@@ -110,6 +112,7 @@ module.exports.login = async (req, res, next) => {
     email: user.email,
     id: user._id,
     token,
+    favourite: user.favourite,
   };
   logger.tempLog.info("User Login: ", message);
   res.status(200).json(message);
@@ -143,4 +146,52 @@ module.exports.changePassword = (req, res) => {
   //         console.log(user);
   //     }
   // })
+};
+
+module.exports.addToFavourite = async (req, res, next) => {
+  const userId = req.userData.id;
+  const articleId = req.body.id;
+
+  try {
+    const user = await User.findById(userId);
+    const article = await Article.findById(articleId);
+    if (!user || !article) {
+      return next("Adding to favourite failed", 500);
+    }
+    user.favourite.push(article);
+    const savedUser = await user.save();
+
+    let result = [];
+    // if favourite are created for the first time..
+    if (savedUser.favourite[0].usersFavourite) {
+      result = savedUser.favourite.map((item) => {
+        return item._id; // map only id's
+      });
+      res.status(200).json({ message: result });
+    } else {
+      res.status(200).json({ message: savedUser.favourite });
+    }
+
+    article.usersFavourite.push(user);
+    await article.save();
+  } catch (error) {
+    return next("Adding to favourite failed", 500);
+  }
+};
+
+module.exports.removeFromFavourite = async (req, res, next) => {
+  const userId = req.userData.id;
+  const articleId = req.body.id;
+
+  try {
+    const user = await User.findById(userId);
+    const article = await Article.findById(articleId);
+    user.favourite.pull({ _id: articleId });
+    const savedUser = await user.save();
+    res.status(200).json({ message: savedUser.favourite });
+    article.usersFavourite.pull({ _id: userId });
+    await article.save();
+  } catch (error) {
+    return next("Removing from favourite failed", 500);
+  }
 };

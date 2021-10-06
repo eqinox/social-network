@@ -31,21 +31,69 @@ export const sendUserData = (newUser, action) => {
 
     try {
       const userData = await fetchData();
-      dispatch(
-        notificationActions.showNotification({
-          status: "success",
-          message:
-            action === "register"
-              ? `Successfully registered and logged in ${userData.email}!`
-              : `Successfully logged in ${userData.email}!`,
-        })
-      );
-      dispatch(userActions.login(userData));
+      if (userData.email) {
+        dispatch(
+          notificationActions.showNotification({
+            status: "success",
+            message:
+              action === "register"
+                ? `Successfully registered and logged in ${userData.email}!`
+                : `Successfully logged in ${userData.email}!`,
+          })
+        );
+        dispatch(userActions.login(userData));
+      } else {
+        dispatch(
+          notificationActions.showNotification({
+            status: "error",
+            message: userData.message,
+          })
+        );
+      }
     } catch (error) {
       dispatch(
         notificationActions.showNotification({
           status: "error",
-          message: "Fetchind user failed!",
+          message: error.toString(),
+        })
+      );
+    }
+  };
+};
+
+export const addToFavourite = (articleId, userToken, action) => {
+  return async (dispatch) => {
+    const favouriteData = async () => {
+      try {
+        let url;
+        if (action === "add") {
+          url = "http://localhost:1339/user/add-favourite";
+        } else if (action === "remove") {
+          url = "http://localhost:1339/user/remove-favourite";
+        }
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: articleId }),
+        });
+
+        return await response.json();
+      } catch (error) {
+        return error;
+      }
+    };
+
+    try {
+      const favouriteResponseUser = await favouriteData();
+      dispatch(userActions.addToFavourite(favouriteResponseUser.message));
+    } catch (error) {
+      dispatch(
+        notificationActions.showNotification({
+          status: "error",
+          message: error.toString(),
         })
       );
     }

@@ -13,6 +13,7 @@ let userSchema = new mongoose.Schema({
   roles: [{ type: String }],
   articles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
   salt: { type: String, required: ERROR_VALIDATION_MESSAGE },
+  favourite: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
 });
 
 userSchema.method({

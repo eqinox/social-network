@@ -15,14 +15,21 @@ module.exports = (app) => {
       check("password").isLength({ min: 3, max: 20 }),
     ],
     handlers.user.register
-  );
+  );  
+  app.post("/user/add-favourite", isAuth, handlers.user.addToFavourite);
+  app.post("/user/remove-favourite", isAuth, handlers.user.removeFromFavourite);
 
   // app.post('/users/logout', isAuth, handlers.user.logout);
 
   app.get("/articles", handlers.article.getAll);
   app.get("/article/:id", handlers.article.getById);
-  app.post('/articles/test', fileUpload.single('image'), handlers.article.test)
-  app.post("/article/add", fileUpload.single('image'), isAuth, handlers.article.add);
+  app.post("/articles/test", fileUpload.single("image"), handlers.article.test);
+  app.post(
+    "/article/add",
+    fileUpload.single("image"),
+    isAuth,
+    handlers.article.add
+  );
   app.delete("/article/:id", isAuth, handlers.article.delete);
   app.patch("/article/:id", isAuth, handlers.article.edit);
 
