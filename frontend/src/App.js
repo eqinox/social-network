@@ -12,6 +12,7 @@ import StartingPage from "./shared/components/StartingPage/StartingPage";
 import AddArticlePage from "./article/pages/AddArticlePage";
 import EditArticlePage from "./article/pages/EditArticlePage";
 import ProfilePage from "./user/ProfilePage";
+import ArticleView from "./article/pages/ArticleView";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,8 @@ const App = () => {
         {isLoggedIn && (
           <Route path="/article/edit/:id" component={EditArticlePage} />
         )}
+
+        <Route path="/article/view/:id" component={ArticleView} />
 
         <Route path="*">
           <Redirect to="/" />

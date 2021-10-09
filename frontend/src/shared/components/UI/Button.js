@@ -38,6 +38,7 @@ const Button = (props) => {
   if (isFavourite) {
     button = (
       <button
+        
         type={props.type || "button"}
         className={`button ${isInFavourite ? "favourite-in" : "favourite-out"}`}
         onClick={clickHandler}

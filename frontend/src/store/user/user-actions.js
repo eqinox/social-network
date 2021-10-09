@@ -82,6 +82,12 @@ export const addToFavourite = (articleId, userToken, action) => {
 
         return await response.json();
       } catch (error) {
+        dispatch(
+          notificationActions.showNotification({
+            status: "error",
+            message: error.toString(),
+          })
+        );
         return error;
       }
     };
@@ -89,6 +95,47 @@ export const addToFavourite = (articleId, userToken, action) => {
     try {
       const favouriteResponseUser = await favouriteData();
       dispatch(userActions.addToFavourite(favouriteResponseUser.message));
+    } catch (error) {
+      dispatch(
+        notificationActions.showNotification({
+          status: "error",
+          message: error.toString(),
+        })
+      );
+    }
+  };
+};
+
+
+export const addNote = (noteText, userToken) => {
+  return async (dispatch, getState) => {
+    const noteData = async () => {
+      try {
+        const articleId = getState().articles.selectedArticle._id;
+        const response = await fetch('http://localhost:1339/article/add-note', {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ id: articleId, text: noteText }),
+        });
+
+        return await response.json();
+      } catch (error) {
+        dispatch(
+          notificationActions.showNotification({
+            status: "error",
+            message: error.toString(),
+          })
+        );
+        return error;
+      }
+    };
+
+    try {
+      const noteResponse = await noteData();
+      dispatch(userActions.addNote(noteResponse));
     } catch (error) {
       dispatch(
         notificationActions.showNotification({

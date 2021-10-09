@@ -1,6 +1,7 @@
 const HttpError = require("../models/http-error");
 const Article = require("mongoose").model("Article");
 const User = require("mongoose").model("User");
+const Note = require("mongoose").model("Note");
 
 module.exports.getAll = async (req, res) => {
   const all = await Article.find().populate("owner", "email");
@@ -14,7 +15,11 @@ module.exports.test = (req, res) => {
 
 module.exports.getById = async (req, res, next) => {
   try {
-    const article = await Article.findById(req.params.id);
+    const article = await Article.findById(req.params.id).populate(
+      "owner",
+      "email"
+    );
+
     res.status(200).json(article);
   } catch (error) {
     return next(new HttpError("Cannot find article!", 500));
@@ -147,4 +152,38 @@ module.exports.add = async (req, res, next) => {
     return next(new HttpError("Creating article failed! User part", 500));
   }
   res.status(200).json({ message: "Successfuly created article" });
+};
+
+module.exports.addNote = async (req, res, next) => {
+  const userId = req.userData.id;
+  const articleId = req.body.id;
+  const text = req.body.text;
+
+  try {
+    const note = await Note.findOne({ owner: userId, article: articleId });
+    const user = await User.findById(userId);
+    const article = await Article.findById(articleId);
+    if (!user || !article) {
+      return next("Adding note failed", 500);
+    }
+    if (note) {
+      note.text = text;
+      const savedNote = await note.save();
+      res.status(200).json(savedNote)
+    } else {
+      let createdNote = new Note({ text });
+      user.notes.push(createdNote);
+      article.notes.push(createdNote);
+      createdNote.owner = user._id;
+      createdNote.article = article._id;
+      const noteResponse = await createdNote.save();
+      await user.save();
+      await article.save();
+      res.status(200).json(noteResponse);
+    }
+
+    
+  } catch (error) {
+    return next(new HttpError("Creating note failed!", 500));
+  }
 };

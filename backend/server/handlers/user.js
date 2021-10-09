@@ -61,6 +61,7 @@ module.exports.register = async (req, res, next) => {
       id: user._id,
       token,
       favourite: user.favourite,
+      notes: user.notes,
     };
     logger.tempLog.info("User Register: ", message);
     res.status(201).json(message);
@@ -88,7 +89,7 @@ function hidePassword(request) {
 module.exports.login = async (req, res, next) => {
   let user;
   try {
-    user = await User.findOne({ email: req.body.email });
+    user = await User.findOne({ email: req.body.email }).populate('notes', 'text article owner');
   } catch (err) {
     return next(
       new HttpError("Signing up failed, please try again later.", 500)
@@ -113,6 +114,7 @@ module.exports.login = async (req, res, next) => {
     id: user._id,
     token,
     favourite: user.favourite,
+    notes: user.notes
   };
   logger.tempLog.info("User Login: ", message);
   res.status(200).json(message);

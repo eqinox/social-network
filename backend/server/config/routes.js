@@ -7,6 +7,7 @@ const HttpError = require("../models/http-error");
 const fileUpload = require("../middlewares/file-upload");
 
 module.exports = (app) => {
+  // Users
   app.post("/users/login", handlers.user.login);
   app.post(
     "/users/register",
@@ -19,8 +20,7 @@ module.exports = (app) => {
   app.post("/user/add-favourite", isAuth, handlers.user.addToFavourite);
   app.post("/user/remove-favourite", isAuth, handlers.user.removeFromFavourite);
 
-  // app.post('/users/logout', isAuth, handlers.user.logout);
-
+  // Articles
   app.get("/articles", handlers.article.getAll);
   app.get("/article/:id", handlers.article.getById);
   app.post("/articles/test", fileUpload.single("image"), handlers.article.test);
@@ -32,6 +32,9 @@ module.exports = (app) => {
   );
   app.delete("/article/:id", isAuth, handlers.article.delete);
   app.patch("/article/:id", isAuth, handlers.article.edit);
+
+  // Notes
+  app.post('/article/add-note', isAuth, handlers.article.addNote)
 
   // nothing match and throw error
   app.use((req, res, next) => {

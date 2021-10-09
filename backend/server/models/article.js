@@ -9,6 +9,7 @@ let articleSchema = new mongoose.Schema({
   publishedDate: { type: Date },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   usersFavourite: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+  notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }]
 });
 
 const Article = mongoose.model("Article", articleSchema);

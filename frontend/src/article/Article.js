@@ -7,7 +7,7 @@ import {
   getAllArticles,
 } from "../store/article/article-actions";
 
-import classes from "./Article.module.css";
+import "./Article.css";
 import { Link } from "react-router-dom";
 import { notificationActions } from "../store/notification/notification-slice";
 import { addToFavourite } from "../store/user/user-actions";
@@ -23,6 +23,9 @@ const Article = (props) => {
   const month = props.publishingDate.toLocaleString("BG", { month: "long" });
   const day = props.publishingDate.toLocaleString("BG", { day: "2-digit" });
   const year = props.publishingDate.getFullYear();
+  const isInFavourite = userFavourite
+    ? userFavourite.includes(articleId)
+    : null;
 
   const deleteHandler = async () => {
     try {
@@ -57,49 +60,51 @@ const Article = (props) => {
 
   const favouriteHandler = () => {
     if (userFavourite.includes(articleId)) {
-      dispatch(addToFavourite(articleId, userToken, 'remove'));
+      dispatch(addToFavourite(articleId, userToken, "remove"));
     } else {
-      dispatch(addToFavourite(articleId, userToken, 'add'));
+      dispatch(addToFavourite(articleId, userToken, "add"));
     }
   };
+
   let favouriteText;
   if (userFavourite.includes(articleId)) {
     favouriteText = "Remove from favourite";
   } else {
     favouriteText = "Add to favourite";
   }
+
   return (
-    <div className={classes.article}>
-      <img alt="something" src={props.image} />
-      <div className={classes.title}>{props.title}</div>
-      <div className={classes["date-elements"]}>
+    <div className="article">
+      <Link to={`/article/view/${articleId}`}>
+        <img alt="something" src={props.image} />
+      </Link>
+      <div className="title">{props.title}</div>
+      <div className="date-elements">
         <p>{day}</p>
         <p>{month}</p>
         <p>{year}</p>
       </div>
-      <div className={classes.text}>{props.body}</div>
-      <div>Author: {publisher}</div>
-      <div className={classes.actions}>
-        <Button
-          onAddToFavourite={favouriteHandler}
+      <div className="text">{props.body.substring(0, 50)}</div>
+      <div className="author">Author: {publisher}</div>
+      <div className="actions">
+        <button
+          onClick={favouriteHandler}
           favourite
-          isInFavourite={
-            userFavourite ? userFavourite.includes(articleId) : null
-          }
+          className={`${isInFavourite ? "favourite-in" : "favourite-out"}`}
         >
           {favouriteText}
-        </Button>
+        </button>
         {userId === props.owner._id && (
           <Link to={`/article/edit/${props.id}`}>
-            <Button type="button" onEdit={editHandler}>
+            <button type="button" onClick={editHandler}>
               Edit
-            </Button>
+            </button>
           </Link>
         )}
         {userId === props.owner._id && (
-          <Button type="button" onDelete={deleteHandler}>
+          <button type="button" onClick={deleteHandler}>
             Delete
-          </Button>
+          </button>
         )}
       </div>
     </div>

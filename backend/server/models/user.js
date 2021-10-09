@@ -14,6 +14,7 @@ let userSchema = new mongoose.Schema({
   articles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
   salt: { type: String, required: ERROR_VALIDATION_MESSAGE },
   favourite: [{ type: mongoose.Schema.Types.ObjectId, ref: "Article" }],
+  notes: [{ type: mongoose.Schema.Types.ObjectId, ref: "Note" }]
 });
 
 userSchema.method({

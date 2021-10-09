@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAllArticles } from "../store/article/article-actions";
 
 import Article from "./Article";
+import './AllArticles.css'
 
 const AllArticles = () => {
   const dispatch = useDispatch();
@@ -11,13 +12,9 @@ const AllArticles = () => {
   useEffect(() => {
     dispatch(getAllArticles());
   }, [dispatch]);
-
-  for (const item of articles) {
-    console.log(item);
-  }
-  console.log('next');
+  
   return (
-    <div>
+    <div className="all-articles">
       {articles.map((article) => (
         <Article
           title={article.title}

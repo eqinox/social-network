@@ -28,8 +28,7 @@ const MainNavigation = () => {
 
     history.replace("/auth");
   };
-  console.log('favourite');
-  console.log(favourite.length);
+  
   return (
     <header className="header">
       <Link to="/">

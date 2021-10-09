@@ -1,0 +1,97 @@
+.article {
+  width: 25%;
+  margin: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid burlywood;
+  padding: 10px;
+  border-radius: 10px;
+  color: antiquewhite;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+}
+
+img {
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-decoration: none;
+}
+
+.title {
+  width: 69%;
+  line-height: 10px;
+  font-size: 1.2rem;
+}
+
+.date-elements {
+  display: flex;
+  width: 100%;
+  margin: auto;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.date-elements p {
+  padding: 3px;
+  font-size: 0.7rem;
+}
+
+.text {
+  width: 100%;
+  text-align: left;
+  padding-bottom: 10px;
+  
+}
+
+.actions {
+  text-align: right;
+}
+
+.actions button {
+  margin: 5px;
+  border: 1px solid burlywood;
+  background-color: #4d4d4d;
+  color: burlywood;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 3px;
+}
+
+.actions button:disabled,
+.actions button:hover:disabled,
+.actions button:active:disabled {
+  background: #ccc;
+  color: #979797;
+  border-color: #ccc;
+  cursor: not-allowed;
+}
+
+.actions button:hover {
+  background-color: #5f5b5b;
+}
+
+.actions button:focus {
+  outline: none;
+  color: red;
+  border: 1px solid red;
+}
+
+.actions .favourite-in {
+  border: 1px solid red;
+  color: red;
+}
+
+.actions .favourite-out {
+  
+  border: 1px solid green;
+  color: greenyellow;
+}
+
+.author {
+  font-size: 0.7rem;
+}

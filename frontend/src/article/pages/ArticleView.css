@@ -1,0 +1,72 @@
+.container {
+  text-align: center;
+  /* display: flex;
+  justify-content: center; */
+  padding-top: 50px;
+  color: aliceblue;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+
+.info img {
+  margin-right: 20px;
+  padding: 5px;
+  width: 200px;
+  height: 200px;
+  line-height: 100px;
+  text-decoration: none;
+}
+
+.info .body {
+  width: 70%;
+  text-align: left;
+  padding: 25px;
+}
+
+.review {
+  text-align: left;
+  margin-left: 19%;
+  padding: 10px;
+}
+
+.comments {
+  text-align: left;
+  margin-left: 19%;
+  padding: 10px;
+}
+
+.comments textarea {
+  width: 40%;
+  height: 150px;
+  border-radius: 10px;
+  border: 1 solid gray;
+  background-color: inherit;
+  padding: 10px;
+  color: antiquewhite;
+}
+
+h1 {
+  color: black;
+}
+
+.body i {
+  font-size: 0.8rem;
+}
+
+.show {
+  display: inline;
+}
+
+.hide {
+  display: none;
+}
+
+.saveNote {
+  position: relative;
+  right: 350px;
+  top: -70px;
+  color: darksalmon;
+}
