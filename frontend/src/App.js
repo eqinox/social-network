@@ -16,23 +16,33 @@ import ArticleView from "./article/pages/ArticleView";
 
 const App = () => {
   const dispatch = useDispatch();
-  const notification = useSelector((state) => state.notification);
+  const bigNotification = useSelector((state) => state.notification);
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const smallNotification = useSelector(
+    (state) => state.notification.smallNotification
+  );
+
+  // hide small notifications
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(notificationActions.hideSmallNotification());
+    }, 2500);
+  }, [smallNotification, dispatch]);
 
   useEffect(() => {
     setTimeout(() => {
-      dispatch(notificationActions.hideNotification());
+      dispatch(notificationActions.hideGlobalNotification());
     }, 5000);
-  }, [notification, dispatch]);
+  }, [bigNotification, dispatch]);
 
   return (
     <Fragment>
       <MainNavigation />
-      {notification.show && (
+      {bigNotification.show && (
         <Notification
-          status={notification.status}
-          title={notification.title}
-          message={notification.message}
+          status={bigNotification.status}
+          title={bigNotification.title}
+          message={bigNotification.message}
         />
       )}
       <Switch>

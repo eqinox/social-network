@@ -15,8 +15,11 @@ const ArticleView = (props) => {
   const userToken = useSelector((state) => state.user.token);
   const article = useSelector((state) => state.articles.selectedArticle);
   const userFavourite = useSelector((state) => state.user.favourite);
+  const smallNotification = useSelector(
+    (state) => state.notification.smallNotification
+  );
+  console.log(smallNotification);
   const [noteText, setNoteText] = useState();
-  const [infoText, setInfoText] = useState(false);
 
   const title = article ? article.title : "Unknown";
   const body = article ? article.body : "Missing information";
@@ -32,14 +35,6 @@ const ArticleView = (props) => {
       setNoteText(user.notes[index].text);
     }
   }, [article]);
-
-  // show Saved Note message
-  useEffect(() => {
-    setInfoText(true)
-    setTimeout(() => {
-      setInfoText(false)
-    }, 3000)
-  }, [user.notes])
 
   // send note text on every note change
   useEffect(() => {
@@ -107,7 +102,7 @@ const ArticleView = (props) => {
           onChange={changeNoteHandler}
           placeholder="Your private notes and comments about the movie"
         />
-        <p className={`saveNote ${infoText? 'show' : 'hide'}`}>Note Saved</p>
+        <p className={`saveNote ${smallNotification ? "show" : "hide"}`}>Note Saved</p>
       </div>
     </div>
   );

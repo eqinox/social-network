@@ -4,7 +4,7 @@ import { notificationActions } from "../notification/notification-slice";
 export const sendUserData = (newUser, action) => {
   return async (dispatch) => {
     dispatch(
-      notificationActions.showNotification({
+      notificationActions.showGlobalNotification({
         status: "pending",
         message: "Logging user",
       })
@@ -33,7 +33,7 @@ export const sendUserData = (newUser, action) => {
       const userData = await fetchData();
       if (userData.email) {
         dispatch(
-          notificationActions.showNotification({
+          notificationActions.showGlobalNotification({
             status: "success",
             message:
               action === "register"
@@ -44,7 +44,7 @@ export const sendUserData = (newUser, action) => {
         dispatch(userActions.login(userData));
       } else {
         dispatch(
-          notificationActions.showNotification({
+          notificationActions.showGlobalNotification({
             status: "error",
             message: userData.message,
           })
@@ -52,7 +52,7 @@ export const sendUserData = (newUser, action) => {
       }
     } catch (error) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: error.toString(),
         })
@@ -83,7 +83,7 @@ export const addToFavourite = (articleId, userToken, action) => {
         return await response.json();
       } catch (error) {
         dispatch(
-          notificationActions.showNotification({
+          notificationActions.showGlobalNotification({
             status: "error",
             message: error.toString(),
           })
@@ -97,7 +97,7 @@ export const addToFavourite = (articleId, userToken, action) => {
       dispatch(userActions.addToFavourite(favouriteResponseUser.message));
     } catch (error) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: error.toString(),
         })
@@ -106,13 +106,12 @@ export const addToFavourite = (articleId, userToken, action) => {
   };
 };
 
-
 export const addNote = (noteText, userToken) => {
   return async (dispatch, getState) => {
     const noteData = async () => {
       try {
         const articleId = getState().articles.selectedArticle._id;
-        const response = await fetch('http://localhost:1339/article/add-note', {
+        const response = await fetch("http://localhost:1339/article/add-note", {
           method: "POST",
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -124,9 +123,9 @@ export const addNote = (noteText, userToken) => {
         return await response.json();
       } catch (error) {
         dispatch(
-          notificationActions.showNotification({
+          notificationActions.showGlobalNotification({
             status: "error",
-            message: error.toString(),
+            message: "Unauthorized",
           })
         );
         return error;
@@ -135,10 +134,15 @@ export const addNote = (noteText, userToken) => {
 
     try {
       const noteResponse = await noteData();
-      dispatch(userActions.addNote(noteResponse));
+      console.log("does we come here");
+      console.log(noteResponse);
+      if (noteResponse._id) {
+        dispatch(userActions.addNote(noteResponse));
+        dispatch(notificationActions.showSmallNotification());
+      }
     } catch (error) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: error.toString(),
         })

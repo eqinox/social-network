@@ -89,7 +89,6 @@ const Article = (props) => {
       <div className="actions">
         <button
           onClick={favouriteHandler}
-          favourite
           className={`${isInFavourite ? "favourite-in" : "favourite-out"}`}
         >
           {favouriteText}
