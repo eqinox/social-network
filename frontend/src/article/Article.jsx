@@ -1,6 +1,5 @@
-import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 import Button from "../shared/components/UI/Button";
 import {
   getOneArticle,
@@ -13,7 +12,7 @@ import { notificationActions } from "../store/notification/notification-slice";
 import { addToFavourite } from "../store/user/user-actions";
 
 const Article = (props) => {
-  const history = useHistory();
+  const history = useNavigate();
   const dispatch = useDispatch();
   const userFavourite = useSelector((state) => state.user.favourite);
   const userToken = useSelector((state) => state.user.token);
@@ -37,16 +36,16 @@ const Article = (props) => {
       const data = await response.json();
 
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "success",
           message: data.message,
         })
       );
       dispatch(getAllArticles());
-      history.replace("/welcome");
+      history("/welcome", { replace: true });
     } catch (err) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: err.toString(),
         })

@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Button from "../../shared/components/UI/Button";
 import { useSelector, useDispatch } from "react-redux";
 import { addToFavourite, addNote } from "../../store/user/user-actions";
 import { getOneArticle } from "../../store/article/article-actions";
 
+import { useParams } from "react-router-dom";
+
 import "./ArticleView.css";
 
-const ArticleView = (props) => {
+const ArticleView = () => {
   const dispatch = useDispatch();
-  const articleId = props.match.params.id;
+  const { id: articleId } = useParams();
 
   const user = useSelector((state) => state.user);
   const userToken = useSelector((state) => state.user.token);
@@ -102,7 +104,9 @@ const ArticleView = (props) => {
           onChange={changeNoteHandler}
           placeholder="Your private notes and comments about the movie"
         />
-        <p className={`saveNote ${smallNotification ? "show" : "hide"}`}>Note Saved</p>
+        <p className={`saveNote ${smallNotification ? "show" : "hide"}`}>
+          Note Saved
+        </p>
       </div>
     </div>
   );

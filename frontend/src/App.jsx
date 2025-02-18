@@ -1,5 +1,5 @@
-import React, { Fragment, useEffect } from "react";
-import { Route, Redirect, Switch } from "react-router-dom";
+import { Fragment, useEffect } from "react";
+import { Route, Navigate, Routes } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -45,41 +45,25 @@ const App = () => {
           message={bigNotification.message}
         />
       )}
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/welcome" />
-        </Route>
-        <Route path="/welcome">
-          <StartingPage />
-        </Route>
+      <Routes>
+        <Route path="/" exact element={<Navigate to="/welcome" />} />
+        <Route path="/welcome" element={<StartingPage />} />
+
+        {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
+        {!isLoggedIn && <Route path="/auth" element={<AuthForm />} />}
 
         {isLoggedIn && (
-          <Route path="/profile">
-            <ProfilePage />
-          </Route>
-        )}
-        {!isLoggedIn && (
-          <Route path="/auth">
-            <AuthForm />
-          </Route>
+          <Route path="/articles/add" element={<AddArticlePage />} />
         )}
 
         {isLoggedIn && (
-          <Route path="/articles/add">
-            <AddArticlePage />
-          </Route>
+          <Route path="/article/edit/:id" element={<EditArticlePage />} />
         )}
 
-        {isLoggedIn && (
-          <Route path="/article/edit/:id" component={EditArticlePage} />
-        )}
+        <Route path="/article/view/:id" element={<ArticleView />} />
 
-        <Route path="/article/view/:id" component={ArticleView} />
-
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
-      </Switch>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </Fragment>
   );
 };

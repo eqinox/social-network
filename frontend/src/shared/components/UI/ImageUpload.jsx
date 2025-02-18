@@ -1,7 +1,6 @@
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import Button from "./Button";
-
 
 import "./ImageUpload.css";
 
@@ -49,7 +48,12 @@ const ImageUpload = (props) => {
       />
       <div className={`image-upload ${props.center && "center"}`}>
         <div className="image-upload__preview">
-          {previewUrl && <img src={props.previewUrl ? baseUrl + previewUrl : previewUrl} alt="Preview" />}
+          {previewUrl && (
+            <img
+              src={props.previewUrl ? baseUrl + previewUrl : previewUrl}
+              alt="Preview"
+            />
+          )}
           {!previewUrl && <p>Please pick an image.</p>}
         </div>
         <Button type="button" onImageUpload={pickImageHandler}>

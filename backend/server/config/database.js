@@ -13,7 +13,6 @@ module.exports = (settings) => {
   mongoose
     .connect(settings.connectionString, {
       useNewUrlParser: true,
-      useCreateIndex: true,
     })
     .then()
     .catch((err) => {

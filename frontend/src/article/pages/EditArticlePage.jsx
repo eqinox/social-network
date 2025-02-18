@@ -1,25 +1,27 @@
-import React, { Fragment, useEffect } from "react";
-import { useHistory } from "react-router";
+import { Fragment, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
 import EditArticleForm from "../components/EditArticleForm";
 import Button from "../../shared/components/UI/Button";
 import { getOneArticle } from "../../store/article/article-actions";
+import { useParams } from "react-router-dom";
 
 import classes from "./EditArticlePage.module.css";
 
-const EditArticlePage = (props) => {
+const EditArticlePage = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
-  const articleId = props.match.params.id;
+  const history = useNavigate();
+  const { id: articleId } = useParams();
+
   const selectedArticle = useSelector(
     (state) => state.articles.selectedArticle
   );
-  useEffect(() => {    
+  useEffect(() => {
     dispatch(getOneArticle(articleId));
-  }, [dispatch, articleId])
+  }, [dispatch, articleId]);
 
   const goBackHandler = () => {
-    history.goBack();
+    history(-1);
   };
 
   return (

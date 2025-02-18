@@ -19,7 +19,7 @@ export const getAllArticles = () => {
       dispatch(articleActions.getAll(articles));
     } catch (error) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: error.toString(),
         })
@@ -47,7 +47,7 @@ export const getOneArticle = (articleId) => {
       dispatch(articleActions.getSelected(article));
     } catch (error) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: error.toString(),
         })

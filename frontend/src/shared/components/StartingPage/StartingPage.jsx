@@ -1,5 +1,3 @@
-import React from "react";
-
 import classes from "./StartingPage.module.css";
 
 import { useSelector } from "react-redux";
@@ -13,13 +11,15 @@ const StartingPage = () => {
   return (
     <section className={classes.starting}>
       <h1>Welcome {user.email}!</h1>
-      
+
       <AllArticles />
 
       <div className={classes["add-article-section"]}>
-        {user.isLoggedIn && <Link to="/articles/add">
-          <Button type="button">Add Article</Button>
-        </Link>}
+        {user.isLoggedIn && (
+          <Link to="/articles/add">
+            <Button type="button">Add Article</Button>
+          </Link>
+        )}
       </div>
     </section>
   );

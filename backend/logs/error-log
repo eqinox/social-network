@@ -1,0 +1,1 @@
+2025-02-18 10:13:30 error [app.js]:: Database Error: MongoParseError: option usecreateindex is not supported undefined Body: undefined Headers: undefined

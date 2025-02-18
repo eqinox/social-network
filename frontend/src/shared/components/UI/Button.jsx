@@ -1,4 +1,3 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 import "./Button.css";
@@ -38,7 +37,6 @@ const Button = (props) => {
   if (isFavourite) {
     button = (
       <button
-        
         type={props.type || "button"}
         className={`button ${isInFavourite ? "favourite-in" : "favourite-out"}`}
         onClick={clickHandler}

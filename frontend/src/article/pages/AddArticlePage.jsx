@@ -1,5 +1,5 @@
-import React, { Fragment } from "react";
-import { useHistory } from "react-router";
+import { Fragment } from "react";
+import { useNavigate } from "react-router";
 import Button from "../../shared/components/UI/Button";
 
 import AddArticleForm from "../components/AddArticleForm";
@@ -7,10 +7,10 @@ import AddArticleForm from "../components/AddArticleForm";
 import classes from "./AddArticlePage.module.css";
 
 const AddArticlePage = () => {
-  const history = useHistory();
+  const history = useNavigate();
 
   const goBackHandler = () => {
-    history.goBack();
+    history(-1);
   };
 
   return (

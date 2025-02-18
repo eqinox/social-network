@@ -1,14 +1,14 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import classes from "./AddArticleForm.module.css";
 import { useDispatch, useSelector } from "react-redux";
 import { notificationActions } from "../../store/notification/notification-slice";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ImageUpload from "../../shared/components/UI/ImageUpload";
 
 const AddArticleForm = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history = useNavigate();
   const userToken = useSelector((state) => state.user.token);
   let image;
 
@@ -34,16 +34,16 @@ const AddArticleForm = () => {
       const data = await response.json();
 
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           message: data.message,
           status: "success",
         })
       );
 
-      history.replace("/welcome");
+      history("/welcome", { replace: true });
     } catch (err) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: err.toString(),
         })

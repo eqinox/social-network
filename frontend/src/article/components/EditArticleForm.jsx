@@ -1,15 +1,15 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 import { notificationActions } from "../../store/notification/notification-slice";
 import ImageUpload from "../../shared/components/UI/ImageUpload";
 
 import classes from "./EditArticleForm.module.css";
 
-const EditArticleForm = (props) => {
-  const history = useHistory();
+const EditArticleForm = () => {
+  const history = useNavigate();
   const dispatch = useDispatch();
   const article = useSelector((state) => state.articles.selectedArticle);
   const userToken = useSelector((state) => state.user.token); // for authentication
@@ -50,16 +50,16 @@ const EditArticleForm = (props) => {
       const data = await response.json();
 
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "success",
           message: data.message,
         })
       );
 
-      history.replace("/welcome");
+      history("/welcome", { replace: true });
     } catch (err) {
       dispatch(
-        notificationActions.showNotification({
+        notificationActions.showGlobalNotification({
           status: "error",
           message: err.toString(),
         })
@@ -70,7 +70,7 @@ const EditArticleForm = (props) => {
   const imageHandler = (incomingImage) => {
     image = incomingImage;
   };
-  
+
   return (
     <div className={classes.auth}>
       <h1>Edit Article</h1>

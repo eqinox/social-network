@@ -1,5 +1,4 @@
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from "react-redux";
 import { userActions } from "../../../store/user/user-slice";
@@ -8,7 +7,7 @@ import "./MainNavigation.css";
 import { notificationActions } from "../../../store/notification/notification-slice";
 
 const MainNavigation = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const dispatch = useDispatch();
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   const user = useSelector((state) => state.user.email);
@@ -18,7 +17,7 @@ const MainNavigation = () => {
     dispatch(userActions.logout());
 
     dispatch(
-      notificationActions.showNotification({
+      notificationActions.showGlobalNotification({
         show: true,
         message: `Successfully logged out ${user}!`,
         status: "success",
@@ -26,9 +25,9 @@ const MainNavigation = () => {
       })
     );
 
-    history.replace("/auth");
+    history("/auth", { replace: true });
   };
-  
+
   return (
     <header className="header">
       <Link to="/">

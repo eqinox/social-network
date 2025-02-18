@@ -1,13 +1,13 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import classes from "./AuthForm.module.css";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { sendUserData } from "../store/user/user-actions";
 
 const AuthForm = () => {
-  const history = useHistory();
+  const history = useNavigate();
   const dispatch = useDispatch();
   const [loginMode, setLoginMode] = useState(true);
   const user = useSelector((state) => state.user.email);
@@ -35,7 +35,7 @@ const AuthForm = () => {
     email = "";
     password = "";
     if (user) {
-      history.replace("/");
+      history("/", { replace: true });
     }
   };
 
